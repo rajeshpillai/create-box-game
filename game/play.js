@@ -50,7 +50,10 @@ var playState = {
     // Use no gravity for the particles
     this.emitter.gravity = 0;
     
-    game.time.events.loop(2200, this.addEnemy, this);
+    //game.time.events.loop(2200, this.addEnemy, this);
+    // Lets make the game a bit easier
+    this.nextEnemy = 0;
+    
   },
   
   update: function() {
@@ -63,6 +66,15 @@ var playState = {
     
     if (!this.player.inWorld) {
       this.playerDie();
+    }
+    
+    // If the 'nextEnemey' time has passed
+    if (this.nextEnemy < game.time.now){
+      // We add a new enemy
+      this.addEnemy();
+      
+      // And we update 'nextEnemy' to have a new enemy in 2.2 seconds
+      this.nextEnemy = game.time.now + 2200;
     }
   },
   
