@@ -16,11 +16,7 @@ var menuState = {
         .to({y:80}, 1000).easing(Phaser.Easing.Bounce.Out)
         .start();
     
-    // Show the score at the center of the screen
-    var scoreLabel = game.add.text(game.world.centerX,
-                        game.world.centerY,'score: ' + game.global.score,
-                        { font: '25px Arial', fill: '#ffffff' });
-    scoreLabel.anchor.setTo(0.5, 0.5);
+   
     
     // Explain how to start the game
     
@@ -41,6 +37,30 @@ var menuState = {
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     // When the 'upKey' is pressed, it will call the 'start' function once
     upKey.onDown.addOnce(this.start, this);
+    
+    
+    // If 'bestScore' is not defined
+    // It means that this is the first time the game is played
+    if (!localStorage.getItem('bestScore')){
+      localStorage.setItem('bestScore', 0);
+    }
+    
+    // If the score is higher that the best score
+    if (game.global.score > localStorage.getItem('bestScore')){
+      // Then udpate the best score
+      localStorage.setItem('bestScore', game.global.score);
+    }
+   
+    
+    var text = 'Score: ' + game.global.score + '\nbest score: ' +
+            localStorage.getItem('bestScore');
+    
+     // Show the score at the center of the screen
+    var scoreLabel = game.add.text(game.world.centerX,
+                        game.world.centerY,'score: ' + text,
+                        { font: '25px Arial', fill: '#ffffff' });
+    scoreLabel.anchor.setTo(0.5, 0.5);
+    
   },
   
   start: function() {
