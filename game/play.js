@@ -175,6 +175,11 @@ var playState = {
     
   // No changes
   playerDie: function() {
+    // If the player is already dead, do nothing
+    if (!this.player.alive){
+      return;
+    }
+    
     // Kill the player to make it disapper from the screen
     this.player.kill();
     
