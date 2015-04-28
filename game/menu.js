@@ -10,13 +10,16 @@ var menuState = {
     nameLabel.anchor.setTo(0.5, 0.5);
     
     // Create a tween on the label
-    var tween = game.add.tween(nameLabel);
+    //var tween = game.add.tween(nameLabel);
     
     // Change the y position of the label to 80, in 1000 ms
-    tween.to({y:80}, 1000);
+    //tween.to({y:80}, 1000);
     
     // Start the tween
-    tween.start();
+    //tween.start();
+    
+    // Add tweening using chaining
+    game.add.tween(nameLabel).to({y:80}, 1000).start();
     
     // Show the score at the center of the screen
     var scoreLabel = game.add.text(game.world.centerX,
