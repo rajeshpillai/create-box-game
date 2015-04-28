@@ -19,11 +19,19 @@ var playState = {
     
     this.coin.anchor.setTo(0.5, 0.5);
     this.scoreLabel = game.add.text(30, 30, 'score: 0',
-                                    { font: '18px Arial', fill: '#ffffff' });
+                                    { font: '18px Arial', fill: '#ffffff' 
+                                    
+                                    });
     
     // New score variable
     game.global.score = 0;
     this.createWorld();
+    
+    // Add sound
+    this.jumpSound = game.add.audio('jump');
+    this.coinSound = game.add.audio('coin');
+    this.deadSound = game.add.audio('dead');
+    
     game.time.events.loop(2200, this.addEnemy, this);
   },
   
@@ -51,6 +59,7 @@ var playState = {
       this.player.body.velocity.x = 0;
     }
     if (this.cursor.up.isDown && this.player.body.touching.down) {
+      this.jumpSound.play();
       this.player.body.velocity.y = -320;
     }
   },
@@ -61,8 +70,11 @@ var playState = {
     // New score variable
     game.global.score += 5;
     this.scoreLabel.text = 'score: ' + game.global.score;
+    
+    this.coinSound.play();
     this.updateCoinPosition();
   },
+  
   updateCoinPosition: function() {
     var coinPosition = [
       {x: 140, y: 60}, {x: 360, y: 60},
@@ -117,6 +129,7 @@ var playState = {
   // No changes
   playerDie: function() {
     // When the player dies, we go to the menu
+    this.deadSound.play();
     game.state.start('menu');
   },
 };
