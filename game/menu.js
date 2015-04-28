@@ -4,19 +4,12 @@ var menuState = {
     game.add.image(0, 0, 'background');
     
     // Change the y position to -50, so we don't see the label
-    var nameLabel = game.add.text(game.world.centerX, -50, 'Super Coin Box',
+    var nameLabel = game.add.text(game.world.centerX, -50, 
+                    'Super Coin Box',
                   { font: '50px Arial', fill: '#ffffff' });
     
     nameLabel.anchor.setTo(0.5, 0.5);
     
-    // Create a tween on the label
-    //var tween = game.add.tween(nameLabel);
-    
-    // Change the y position of the label to 80, in 1000 ms
-    //tween.to({y:80}, 1000);
-    
-    // Start the tween
-    //tween.start();
     
     // Add tweening using chaining
     game.add.tween(nameLabel)
@@ -38,6 +31,12 @@ var menuState = {
 
     startLabel.anchor.setTo(0.5, 0.5);
 
+    // Add rotate tween to startLabel
+    game.add.tween(startLabel).to({angle: -2}, 500)
+            .to({angle:2}, 500)
+            .loop()
+            .start();
+    
     // Create a new Phaser keyboard variable: the up arrow key
     var upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
     // When the 'upKey' is pressed, it will call the 'start' function once
