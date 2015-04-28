@@ -49,18 +49,29 @@ var playState = {
   },
   
   movePlayer: function() {
+    // Move the player to the left
     if (this.cursor.left.isDown) {
       this.player.body.velocity.x = -200;
+      this.player.animations.play('left'); // Start the left animation
     }
+    
+    // Move the player to the right
     else if (this.cursor.right.isDown) {
       this.player.body.velocity.x = 200;
+      this.player.animations.play('right'); // Start the right animation
     }
+    
+    // Stop the player
     else {
       this.player.body.velocity.x = 0;
+      this.player.animations.stop(); // Stop the animation
+      this.player.frame = 0;    // Set the player frame to 0 (stand still)
     }
+    
+    // Make the player jump
     if (this.cursor.up.isDown && this.player.body.touching.down) {
-      this.jumpSound.play();
       this.player.body.velocity.y = -320;
+      this.jumpSound.play();
     }
   },
   
@@ -124,6 +135,13 @@ var playState = {
 
     middleBottom.scale.setTo(1.5, 1);
     this.walls.setAll('body.immovable', true);
+    
+    // Create the 'right' animation bylooping the frame 1 and 2
+    this.player.animations.add('right', [1,2], 8, true);
+    
+    // Create the 'left' animation by looping the frames 3 and 4
+    this.player.animations.add('left', [3,4], 8, true);
+    
   },
     
   // No changes
