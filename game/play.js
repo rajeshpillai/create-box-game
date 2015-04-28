@@ -90,6 +90,11 @@ var playState = {
     
     // Grow the coin back to its original scale in 300ms
     game.add.tween(this.coin.scale).to({x:1, y:1}, 300).start();
+    
+    // Grow the player
+    game.add.tween(this.player.scale).to({x:1.3, y:1.3})
+              .to({x:1, y:1}, 150)
+              .start();
   },
   
   updateCoinPosition: function() {
