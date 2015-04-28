@@ -6,6 +6,14 @@ var playState = {
     this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
     this.player.anchor.setTo(0.5, 0.5);
     
+    
+    // Add WASK keys support
+    this.wasd = {
+      up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+      left: game.input.keyboard.addKey(Phaser.Keyboard.A),
+      right: game.input.keyboard.addKey(Phaser.Keyboard.D)
+    };
+    
     game.physics.arcade.enable(this.player);
     
     this.player.body.gravity.y = 500;
@@ -91,29 +99,30 @@ var playState = {
   },
   
   movePlayer: function() {
-    // Move the player to the left
-    if (this.cursor.left.isDown) {
+    // If the left arrow or the A key is pressed
+    if (this.cursor.left.isDown || this.wasd.left.isDown) {
       this.player.body.velocity.x = -200;
       this.player.animations.play('left'); // Start the left animation
     }
     
-    // Move the player to the right
-    else if (this.cursor.right.isDown) {
+    // Move the player to the right or the D key is pressed
+    else if (this.cursor.right.isDown || this.wasd.right.isDown) {
       this.player.body.velocity.x = 200;
       this.player.animations.play('right'); // Start the right animation
     }
     
-    // Stop the player
+    // If nothing is pressed,  Stop the player
     else {
       this.player.body.velocity.x = 0;
       this.player.animations.stop(); // Stop the animation
       this.player.frame = 0;    // Set the player frame to 0 (stand still)
     }
     
-    // Make the player jump
-    if (this.cursor.up.isDown && this.player.body.touching.down) {
-      this.player.body.velocity.y = -320;
-      this.jumpSound.play();
+    // Make the player jump, if the up arrow or the w key is pressed
+    if ((this.cursor.up.isDown || this.wasd.up.isDown) 
+      && this.player.body.touching.down) {
+        this.jumpSound.play();
+        this.player.body.velocity.y = -320;
     }
   },
   
