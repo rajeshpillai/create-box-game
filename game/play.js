@@ -84,6 +84,12 @@ var playState = {
     
     this.coinSound.play();
     this.updateCoinPosition();
+    
+    // Scale the coin to 0 to make it invisible
+    this.coin.scale.setTo(0,0);
+    
+    // Grow the coin back to its original scale in 300ms
+    game.add.tween(this.coin.scale).to({x:1, y:1}, 300).start();
   },
   
   updateCoinPosition: function() {
