@@ -67,6 +67,11 @@ var menuState = {
     // If the mouse is over the button, it becomes hand cursor
     this.muteButton.input.useHandCursor = true;
     
+    // If the game is already muted
+    if (game.sound.mute){
+      // Change the frame to display the speaker with no sound
+      this.muteButton.frame = 1;
+    }
   },
   
   start: function() {
@@ -81,6 +86,6 @@ var menuState = {
     game.sound.mute = ! game.sound.mute;
     
     // Change the frame of the button
-    ths.muteButton.frame = game.sound.mute ? 1: 0;
+    this.muteButton.frame = game.sound.mute ? 1: 0;
   }
 };
