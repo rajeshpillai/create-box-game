@@ -31,6 +31,9 @@ var loadState = {
     // Load particle pixel
     game.load.image('pixel', 'assets/pixel.png');
     
+    // Load mute png
+    game.load.spritesheet('mute', 'assets/muteButton.png', 28, 22);
+    
   },
   create: function() {
     // Go to the menu state

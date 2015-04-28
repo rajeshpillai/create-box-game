@@ -61,10 +61,26 @@ var menuState = {
                         { font: '25px Arial', fill: '#ffffff' });
     scoreLabel.anchor.setTo(0.5, 0.5);
     
+    // Add the mute button that calls the 'toggleSound' function 
+    this.muteButton = game.add.button(20,20,'mute', this.toggleSound, this);
+    
+    // If the mouse is over the button, it becomes hand cursor
+    this.muteButton.input.useHandCursor = true;
+    
   },
   
   start: function() {
     // Start the actual game
     game.state.start('play');
   },
+  
+  // Function called when the 'muteButton' is pressed
+  toggleSound: function (){
+    // Switch the Phaser sound variable from true to false, or false
+    // to true when 'game.sound.mute = true', Phaser will mute the game
+    game.sound.mute = ! game.sound.mute;
+    
+    // Change the frame of the button
+    ths.muteButton.frame = game.sound.mute ? 1: 0;
+  }
 };
