@@ -2,7 +2,6 @@
 var playState = {
   // Removed the preload function
   create: function() {
-    // Removed background color and physics system
     this.cursor = game.input.keyboard.createCursorKeys();
     this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'player');
     this.player.anchor.setTo(0.5, 0.5);
@@ -54,6 +53,12 @@ var playState = {
     // Lets make the game a bit easier
     this.nextEnemy = 0;
     
+    // Let phaser handle the up,left,down,right key (to avoid scrolling in browsers)
+    
+    game.input.keyboard.addKeyCapture(Phaser.Keyboard.UP,
+                                      Phaser.Keyboard.DOWN,
+                                      Phaser.Keyboard.LEFT,
+                                      Phaser.Keyboard.RIGHT);
   },
   
   update: function() {
