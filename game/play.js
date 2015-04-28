@@ -70,11 +70,18 @@ var playState = {
     
     // If the 'nextEnemey' time has passed
     if (this.nextEnemy < game.time.now){
-      // We add a new enemy
+      // Define our variables
+      var start = 4000, end = 1000, score = 100;
+      
+      // Formula to decrease the delay between enemies over time
+      // At first it's 4000ms, then slowly goes to 1000ms
+      var delay = Math.max(start - (start - end) * game.global.score/score, end);
+      
+      // We add a new enemy, and update the 'nextEnemy' time
       this.addEnemy();
       
       // And we update 'nextEnemy' to have a new enemy in 2.2 seconds
-      this.nextEnemy = game.time.now + 2200;
+      this.nextEnemy = game.time.now + delay;
     }
   },
   
