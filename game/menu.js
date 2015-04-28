@@ -19,7 +19,9 @@ var menuState = {
     //tween.start();
     
     // Add tweening using chaining
-    game.add.tween(nameLabel).to({y:80}, 1000).start();
+    game.add.tween(nameLabel)
+        .to({y:80}, 1000).easing(Phaser.Easing.Bounce.Out)
+        .start();
     
     // Show the score at the center of the screen
     var scoreLabel = game.add.text(game.world.centerX,
