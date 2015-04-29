@@ -67,6 +67,12 @@ var playState = {
                                       Phaser.Keyboard.DOWN,
                                       Phaser.Keyboard.LEFT,
                                       Phaser.Keyboard.RIGHT);
+    
+    // If the game is running on a mobile device
+    if (!game.device.desktop){
+      // Display the mobile inputs
+      this.addMobileInputs();
+    }
   },
   
   update: function() {
@@ -100,13 +106,13 @@ var playState = {
   
   movePlayer: function() {
     // If the left arrow or the A key is pressed
-    if (this.cursor.left.isDown || this.wasd.left.isDown) {
+    if (this.cursor.left.isDown || this.wasd.left.isDown || this.moveLeft) {
       this.player.body.velocity.x = -200;
       this.player.animations.play('left'); // Start the left animation
     }
     
     // Move the player to the right or the D key is pressed
-    else if (this.cursor.right.isDown || this.wasd.right.isDown) {
+    else if (this.cursor.right.isDown || this.wasd.right.isDown || this.moveRight) {
       this.player.body.velocity.x = 200;
       this.player.animations.play('right'); // Start the right animation
     }
@@ -121,8 +127,9 @@ var playState = {
     // Make the player jump, if the up arrow or the w key is pressed
     if ((this.cursor.up.isDown || this.wasd.up.isDown) 
       && this.player.body.touching.down) {
-        this.jumpSound.play();
-        this.player.body.velocity.y = -320;
+        //this.jumpSound.play();
+        //this.player.body.velocity.y = -320;
+        this.jumpPlayer();
     }
   },
   
@@ -232,5 +239,59 @@ var playState = {
   
   startMenu: function (){
     game.state.start('menu');
+  },
+  
+  addMobileInputs: function (){
+    // Add the jump button
+    this.jumpButton = game.add.sprite(350, 247, 'jumpButton');
+    this.jumpButton.inputEnabled = true;
+    this.jumpButton.events.onInputDown.add(this.jumpPlayer, this);
+    this.jumpButton.alpha = 0.5;
+    // Movement variables
+    this.moveLeft = false;
+    this.moveRight = false;
+    // Add the move left button
+    this.leftButton = game.add.sprite(50, 247, 'leftButton');
+    this.leftButton.inputEnabled = true;
+    this.leftButton.events.onInputOver.add(function()   {this.moveLeft=true;}, this);
+  
+    this.leftButton.events.onInputOut
+            .add(function(){
+              this.moveLeft=false;
+            }, this);
+    
+    this.leftButton.events.onInputDown
+            .add(function() {
+                this.moveLeft=true;
+            }, this);
+    
+    this.leftButton.events.onInputUp
+          .add(function(){
+              this.moveLeft=false;
+          }, this);
+    
+    this.leftButton.alpha = 0.5;
+    
+    // Add the move right button
+    this.rightButton = game.add.sprite(130, 247, 'rightButton');
+    this.rightButton.inputEnabled = true;
+    
+    this.rightButton.events.onInputOver.add(function(){this.moveRight=true;},this);
+    this.rightButton.events.onInputOut.add(function(){this.moveRight=false;},this);
+    this.rightButton.events.onInputDown.add(function(){this.moveRight=true;},this);
+    this.rightButton.events.onInputUp.add(function(){this.moveRight=false;},this);
+    this.rightButton.alpha = 0.5;
+    
+  },
+  
+  jumpPlayer: function(){
+    // If the player is touching the ground
+    //if (this.player.body.onFloor()){
+    if ((this.cursor.up.isDown || this.wasd.up.isDown) 
+      && this.player.body.touching.down) {
+      // Jump with sound
+      this.player.body.velocity.y = -360;
+      this.jumpSound.play();
+    }
   }
 };

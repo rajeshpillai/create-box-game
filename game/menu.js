@@ -20,9 +20,16 @@ var menuState = {
     
     // Explain how to start the game
     
+    if (game.device.desktop) {
+      var text = 'press the up arrow key to start';
+    }
+    else{
+      var text = 'touch the screen to start';
+    }
+    
     var startLabel = game.add.text(game.world.centerX, 
                            game.world.height-80, 
-                           'press the up arrow key to start',
+                           text,
                            { font: '25px Arial', fill: '#ffffff' });
 
     startLabel.anchor.setTo(0.5, 0.5);
@@ -38,6 +45,8 @@ var menuState = {
     // When the 'upKey' is pressed, it will call the 'start' function once
     upKey.onDown.addOnce(this.start, this);
     
+    // Add touch event
+    game.input.onDown.addOnce(this.start, this);
     
     // If 'bestScore' is not defined
     // It means that this is the first time the game is played

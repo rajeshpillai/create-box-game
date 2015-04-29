@@ -34,6 +34,12 @@ var loadState = {
     // Load mute png
     game.load.spritesheet('mute', 'assets/muteButton.png', 28, 22);
     
+    // Load the touch controls
+    game.load.image('jumpButton', 'assets/jumpButton.png');
+    game.load.image('rightButton','assets/rightButton.png');
+    game.load.image('leftButton','assets/leftButton.png');
+    
+    
   },
   create: function() {
     // Go to the menu state
